@@ -4,6 +4,8 @@
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,7 +13,10 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -19,8 +24,12 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /* 1. Download the JavaZoom jar from here: http://bit.ly/javazoom
  * 2. Right click your project and add it as an External JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
-
+public class Jukebox implements Runnable, ActionListener {
+	JButton b1 = new JButton("Groove");
+    JButton b2 = new JButton("Hotline Bling");
+    JButton b3 = new JButton("PANIC");
+    Song groove = new Song("groove.mp3");
+    Song Bling = new Song("Drake - Hotline Bling.mp3");
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Jukebox());
 	}
@@ -29,9 +38,33 @@ public class Jukebox implements Runnable {
 
 		// 3. Find an mp3 on your computer or on the Internet.
 		// 4. Create a Song
-
+        	   
+         
 		// 5. Play the Song
+         
+         
+         JFrame frame = new JFrame("JukeBox");
+         JPanel panel = new JPanel();
+         
+         
+         frame.add(panel);
+         panel.add(b1);
+         panel.add(b2);
+         panel.add(b3);
+        
+         frame.setVisible(true);
+         panel.setVisible(true);
+         b1.addActionListener(this);
+         b2.addActionListener(this);
+         b3.addActionListener(this);
+         frame.pack();
 
+         
+         
+         
+         
+         
+         
 		/*
 		 * 6. Create a user interface for your Jukebox so that the user can to
 		 * choose which song to play. You can use can use a different button for
@@ -45,6 +78,24 @@ public class Jukebox implements Runnable {
 		URL imageURL = getClass().getResource(fileName);
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == b1) {
+			Bling.stop();
+			groove.play();
+		}
+		if(e.getSource() == b2) {
+			groove.stop();
+			Bling.play();
+		}
+		if(e.getSource() == b3) {
+			groove.stop();
+			Bling.stop();
+			System.out.println("PANIC");
+		}
+		
 	}
 
 }
